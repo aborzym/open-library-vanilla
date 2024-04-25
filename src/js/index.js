@@ -1,6 +1,7 @@
 import { searchForm, results } from './utils/dom';
 import { searchBooks } from './services/axios/books.service';
 
+//ASYNC - AWAIT
 // searchForm.addEventListener('submit', async (ev) => {
 //   ev.preventDefault();
 //   const author = ev.currentTarget.elements.author.value;
@@ -13,6 +14,7 @@ import { searchBooks } from './services/axios/books.service';
 //   }).join("");
 // });
 
+//PROMISE
 searchForm.addEventListener('submit', (ev) => {
   ev.preventDefault();
   const author = ev.currentTarget.elements.author.value;
@@ -20,8 +22,10 @@ searchForm.addEventListener('submit', (ev) => {
   searchBooks(author, title).then((books) => {
     console.log(books);
     const list = books.docs;
-    results.innerHTML = list.map((book) => {
-      return `<div class="result-book"><img src="https://covers.openlibrary.org/b/id/${book.cover_i}-S.jpg" /><p>${book.title} (${book.author_name})</p></div>`;
-    }).join("");
+    results.innerHTML = list
+      .map((book) => {
+        return `<div class="result-book"><img src="https://covers.openlibrary.org/b/id/${book.cover_i}-S.jpg" /><p>${book.title} (${book.author_name})</p></div>`;
+      })
+      .join('');
   });
 });
