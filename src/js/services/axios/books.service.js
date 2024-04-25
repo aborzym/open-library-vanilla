@@ -1,19 +1,20 @@
 import axios from 'axios';
 
-/**
- * @typedef {object} SearchData
- * @property {string} [author] Autor książki
- * @property {string} [title] Tytuł książki
- * @property {number} [page=1] Strona wyników
- */
+export async function searchBooks(author, title) {
+  // Krok 1. Stworzenie parametrów wyszukiwania z obiektu
+  const params = new URLSearchParams({ author, title });
 
-/**
- * @param {SearchData} searchData
- */
-export async function searchBooks(searchData) {
+  // Krok 2. Upewnienie się, że zwracany jest ciąg znaków,
+  //         który może zostać umieszczony w linku
+  console.log(params.toString());
+
+  // Krok 3. Wykorzystanie ciągu znaków w linku służącym do
+  //         otrzymania danych z internetu
   return axios
-    .get(`https://openlibrary.org/search.json`, { params: searchData })
-    .then((res) => res.data);
+    .get(`https://openlibrary.org/search.json?${params}`)
+    .then((res) => {
+      return res.data;
+    });
 }
 
 export async function getBook(isbn) {
